@@ -1,7 +1,8 @@
 #define Audio A0
 #define Envelope A1
 
-const double dBAnalogModerate = 12;
+const float dBAnalogModerate = 12;
+float maximum;
 float calculateDecibels(float x){
   float decibelsCalculated = 20 * log10(x/dBAnalogModerate);
   return decibelsCalculated;
@@ -14,12 +15,25 @@ void setup() {
 
 void loop() {
 
- float envelopeNormalyze = 58;
+ float envelopeNormalyze = 64;
+ float normalValueDB = 59; //Normal sound in DB
   
  float audioValue = analogRead(Audio);
  float envelopeValue = analogRead(Envelope);
  envelopeNormalyze += calculateDecibels(envelopeValue);
- Serial.print("Envelope: ");
- Serial.println(envelopeNormalyze);
- delay(50);
+
+ if(envelopeNormalyze>maximum){
+  maximum = envelopeNormalyze;
+  }
+  else if(envelopeNormalyze<maximum){
+    maximum == maximum;
+    }
+ 
+  Serial.print(normalValueDB);
+  Serial.print(" "); 
+  Serial.print(envelopeNormalyze);
+  Serial.print(" ");
+  Serial.println(maximum);
+
+ delay(100);
 }
